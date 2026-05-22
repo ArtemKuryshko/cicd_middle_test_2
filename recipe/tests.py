@@ -21,3 +21,10 @@ class RecipeViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'main.html')
         self.assertEqual(len(response.context['recipes']), 10)
+
+    def test_main_view_handles_empty_recipe_list(self):
+        response = self.client.get(reverse('main'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'main.html')
+        self.assertEqual(list(response.context['recipes']), [])
