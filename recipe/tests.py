@@ -54,3 +54,10 @@ class RecipeViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'category_detail.html')
         self.assertEqual(list(response.context['category']), [target_recipe])
+
+    def test_category_detail_view_returns_404_for_missing_category(self):
+        response = self.client.get(
+            reverse('category_detail', kwargs={'category_id': 999})
+        )
+
+        self.assertEqual(response.status_code, 404)
